@@ -3,59 +3,153 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>GTA5 Mod Starter</title>
+	<title>Download GTA5 Mods</title>
 	<style>
 		:root { color-scheme: dark; --ink: #f6f2e9; --muted: #aaa99f; --line: #30352f; --panel: rgba(8, 14, 10, .36); --green: #b7ef73; --orange: #ff9c66; }
 		* { box-sizing: border-box; }
 		body { margin: 0; min-height: 100vh; color: var(--ink); font-family: "Segoe UI", "Trebuchet MS", sans-serif; background-color: #183b1b; background-image: linear-gradient(90deg, rgba(35,83,32,.58) 0%, rgba(25,58,24,.45) 48%, rgba(2,7,4,.72) 100%), url("https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png"); background-position: center; background-size: cover; background-attachment: fixed; background-blend-mode: normal, normal; }
 		body::before { position: fixed; z-index: -1; inset: 0; background: linear-gradient(120deg, rgba(183,239,115,.08), transparent 38%), repeating-linear-gradient(135deg, transparent 0 38px, rgba(255,255,255,.018) 39px 40px); content: ""; }
-		.shell { width: min(1120px, calc(100% - 40px)); margin: auto; padding: 26px 0 52px; }
-		header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid var(--line); font-family: "Trebuchet MS", sans-serif; }
+		.shell { width: min(1000px, calc(100% - 40px)); margin: auto; padding: 26px 0 52px; }
+		header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 		.brand { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 700; }
 		.mark { width: 12px; height: 12px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px var(--green); }
-		nav { display: flex; gap: 24px; color: var(--muted); font-size: .8rem; }
-		.hero { display: grid; grid-template-columns: 1.1fr .9fr; gap: 8vw; align-items: center; min-height: 62vh; padding: 70px 0 54px; }
-		.kicker { color: var(--green); font-family: "Trebuchet MS", sans-serif; font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
-		h1 { max-width: 680px; margin: 18px 0; font-size: clamp(3.6rem, 8vw, 7rem); line-height: .9; letter-spacing: -.07em; }
-		.intro { max-width: 510px; color: #000; font-size: 1.12rem; font-weight: 700; line-height: 1.65; }
-		.actions { margin-top: 30px; }
-		.button { display: inline-block; padding: 14px 20px; border: 1px solid var(--green); border-radius: 4px; color: #10150d; background: var(--green); font-family: "Trebuchet MS", sans-serif; font-size: .9rem; font-weight: 700; text-decoration: none; transition: transform .2s, background .2s; }
+		header span:last-child { color: var(--muted); font-size: .8rem; letter-spacing: .12em; }
+		main { display: grid; min-height: 72vh; place-items: center; padding: 70px 0; }
+		.download-card { width: min(620px, 100%); padding: clamp(28px, 6vw, 58px); border: 1px solid rgba(255,255,255,.18); border-radius: 10px; text-align: center; background: var(--panel); box-shadow: 16px 16px 0 rgba(255,156,102,.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+		.kicker { color: var(--green); font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+		h1 { margin: 18px 0 14px; font-size: clamp(2.8rem, 7vw, 5.5rem); line-height: .95; letter-spacing: -.06em; }
+		.intro { margin: 0 auto; max-width: 470px; color: #000; font-size: 1.05rem; font-weight: 700; line-height: 1.6; }
+		.file { display: flex; align-items: center; gap: 14px; margin: 34px auto 26px; padding: 16px; max-width: 390px; border: 1px solid rgba(255,255,255,.14); border-radius: 6px; text-align: left; background: rgba(0,0,0,.2); }
+		.file-icon { display: grid; width: 48px; height: 58px; flex: 0 0 auto; place-items: center; border-radius: 5px; color: #10150d; background: var(--green); font-size: .68rem; font-weight: 800; }
+		.file strong { display: block; margin-bottom: 4px; font-size: 1rem; }
+		.file small { color: var(--muted); font-size: .78rem; }
+		.button { display: inline-block; padding: 14px 24px; border: 1px solid var(--green); border-radius: 4px; color: #10150d; background: var(--green); font-size: .9rem; font-weight: 700; text-decoration: none; transition: transform .2s, background .2s; }
 		.button:hover { transform: translateY(-2px); background: #d2ffa1; }
-		.download-note { margin: 0 0 12px; color: #000; font: 700 .75rem "Trebuchet MS", sans-serif; }
-		.panel { padding: 28px; border: 1px solid rgba(255,255,255,.18); border-radius: 8px; background: var(--panel); box-shadow: 16px 16px 0 rgba(255,156,102,.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-		.panel-label { color: var(--orange); font: 700 .73rem "Trebuchet MS", sans-serif; letter-spacing: .14em; text-transform: uppercase; }
-		.panel h2 { margin: 14px 0 24px; font-size: 2rem; }
-		.steps { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
-		.steps li { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; color: var(--muted); line-height: 1.45; }
-		.steps strong { display: block; color: var(--ink); font-family: "Trebuchet MS", sans-serif; font-size: .9rem; }
-		.number { display: grid; width: 26px; height: 26px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--green); font-family: "Trebuchet MS", sans-serif; font-size: .78rem; }
-		.warning { display: flex; gap: 12px; align-items: start; padding: 18px 0 0; border-top: 1px solid var(--line); color: var(--muted); font: .8rem/1.5 "Trebuchet MS", sans-serif; }
-		.warning b { color: var(--orange); }
-		@media (max-width: 760px) { .shell { width: min(100% - 28px, 560px); } nav { display: none; } .hero { display: block; padding-top: 18vh; } h1 { font-size: clamp(3.4rem, 16vw, 6rem); overflow-wrap: anywhere; } .panel { margin-top: 64px; } }
+		.verify { display: flex; align-items: center; gap: 10px; width: fit-content; margin: 26px auto 16px; color: var(--ink); font-size: .86rem; }
+		.verify input { width: 17px; height: 17px; accent-color: var(--green); }
+		.captcha { display: none; margin: 0 auto 16px; padding: 14px; max-width: 360px; border: 1px solid rgba(255,255,255,.14); border-radius: 6px; background: rgba(0,0,0,.2); }
+		.captcha.visible { display: block; }
+		.captcha label { display: block; margin-bottom: 12px; color: var(--ink); font-size: .8rem; font-weight: 700; }
+		.captcha-choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+		.captcha-choice { display: grid; min-height: 76px; overflow: hidden; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 5px; background: rgba(0,0,0,.35); cursor: pointer; transition: border-color .2s, transform .2s, background .2s; }
+		.captcha-choice:hover { transform: translateY(-2px); border-color: var(--green); background: rgba(183,239,115,.12); }
+		.captcha-choice img { display: block; width: 100%; height: 90px; object-fit: cover; }
+		.captcha-error { min-height: 16px; margin: 8px 0 0; color: var(--orange); font-size: .72rem; }
+		.countdown { min-height: 18px; margin: 0 0 16px; color: var(--muted); font-size: .75rem; }
+		.button[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+		.note { margin: 18px 0 0; color: var(--muted); font-size: .75rem; }
+		@media (max-width: 600px) { .shell { width: min(100% - 28px, 560px); } header span:last-child { display: none; } main { padding: 44px 0; } h1 { overflow-wrap: anywhere; } }
 	</style>
 </head>
 <body>
 	<div class="shell">
 		<header>
 			<div class="brand"><span class="mark"></span> GTA5 Mod Starter</div>
-			<nav aria-label="Main navigation"><span>BEGIN HERE</span><span>SINGLE PLAYER</span></nav>
+			<span>DOWNLOAD CENTER</span>
 		</header>
 		<main>
-			<section class="hero">
-				<div>
-					<div class="kicker">Your first step into modding</div>
-					<h1>Build a better Los Santos.</h1>
-					<p class="intro">New to GTA5 mods? Start with a simple, organized list of the essentials. Download the starter guide and take it one mod at a time.</p>
-					<div class="actions"><p class="download-note">Includes the basic tools and first steps</p><a class="button" href="https://www.youtube.com">Download mods</a></div>
+			<section class="download-card" aria-labelledby="page-title">
+				<div class="kicker">Blockifys GTA5 Starter Mods</div>
+				<h1 id="page-title">Download the mods.</h1>
+				<p class="intro">Everything you need to get started with GTA5 single-player mods, packed into one download.</p>
+				<div class="file">
+					<div class="file-icon" aria-hidden="true">ZIP</div>
+					<div><strong>mods.zip</strong><small>Starter mod collection and README</small></div>
 				</div>
-				<aside class="panel" aria-label="Getting started guide">
-					<div class="panel-label">Start here</div>
-					<h2>Three things to know</h2>
-					<ol class="steps"><li><span class="number">01</span><div><strong>Back up your game</strong>Keep original files safe before changing anything.</div></li><li><span class="number">02</span><div><strong>Install the basics</strong>Most single-player mods list their required tools.</div></li><li><span class="number">03</span><div><strong>Read the requirements</strong>Install one mod at a time so troubleshooting stays easy.</div></li></ol>
-					<p class="warning"><b>NOTE</b><span>Use mods in story mode only. Do not use modified files in GTA Online. And here is a link for mods https://www.gta5-mods.com/.</span></p>
-				</aside>
+				<label class="verify"><input id="humanCheck" type="checkbox"> I am here to download</label>
+				<div class="captcha" id="captchaForm">
+					<label id="captchaQuestion">Quick check: click the bus.</label>
+					<div class="captcha-choices" id="captchaChoices"></div>
+					<p class="captcha-error" id="captchaError" aria-live="polite"></p>
+				</div>
+				<p class="countdown" id="countdown" aria-live="polite">Check the box to continue.</p>
+				<a class="button" id="downloadButton" href="https://www.mediafire.com/file/s9b6q4lyju84yw6/mods.zip/file" aria-disabled="true" tabindex="-1">Download now</a>
+				<p class="note">For GTA5 story mode only. Back up your files before installing.</p>
 			</section>
 		</main>
 	</div>
+	<script>
+		const humanCheck = document.querySelector("#humanCheck");
+		const captchaForm = document.querySelector("#captchaForm");
+		const captchaQuestion = document.querySelector("#captchaQuestion");
+		const captchaChoices = document.querySelector("#captchaChoices");
+		const captchaError = document.querySelector("#captchaError");
+		const countdown = document.querySelector("#countdown");
+		const downloadButton = document.querySelector("#downloadButton");
+		const questionsRequired = 2;
+		let questionsCompleted = 0;
+		const captchaItems = [
+			{ name: "bus", image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=400&q=80" },
+			{ name: "car", image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=400&q=80" },
+			{ name: "house", image: "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=400&q=80" },
+			{ name: "tree", image: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=400&q=80" },
+			{ name: "apple", image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=400&q=80" },
+			{ name: "map", image: "https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png" }
+		];
+		function renderChallenge() {
+			const captchaTarget = captchaItems[Math.floor(Math.random() * captchaItems.length)];
+			const captchaChoicesList = [...captchaItems].sort(() => Math.random() - 0.5).slice(0, 3);
+			if (!captchaChoicesList.some((item) => item.name === captchaTarget.name)) captchaChoicesList[0] = captchaTarget;
+			captchaChoices.replaceChildren();
+			captchaChoicesList.sort(() => Math.random() - 0.5).forEach((item) => {
+				const choice = document.createElement("button");
+				const image = document.createElement("img");
+				choice.className = "captcha-choice";
+				choice.type = "button";
+				image.src = item.image;
+				image.alt = item.name;
+				choice.append(image);
+				choice.setAttribute("aria-label", item.name);
+				choice.dataset.correct = String(item.name === captchaTarget.name);
+				captchaChoices.append(choice);
+			});
+			captchaQuestion.textContent = `Quick check ${questionsCompleted + 1} of ${questionsRequired}: click the ${captchaTarget.name}.`;
+		}
+		renderChallenge();
+
+		humanCheck.addEventListener("change", () => {
+			if (!humanCheck.checked) {
+				captchaForm.classList.remove("visible");
+				questionsCompleted = 0;
+				renderChallenge();
+				captchaError.textContent = "";
+				countdown.textContent = "Check the box to continue.";
+				downloadButton.setAttribute("aria-disabled", "true");
+				downloadButton.setAttribute("tabindex", "-1");
+				return;
+			}
+			captchaForm.classList.add("visible");
+			countdown.textContent = "Complete the check to continue.";
+		});
+
+		captchaChoices.addEventListener("click", (event) => {
+			const choice = event.target.closest(".captcha-choice");
+			if (!choice) return;
+			if (choice.dataset.correct !== "true") {
+				captchaError.textContent = "That answer is not correct. Try again.";
+				return;
+			}
+			questionsCompleted += 1;
+			if (questionsCompleted < questionsRequired) {
+				captchaError.textContent = "Correct. Complete the next check.";
+				renderChallenge();
+				return;
+			}
+
+			captchaForm.classList.remove("visible");
+			humanCheck.disabled = true;
+			let seconds = 4;
+			countdown.textContent = `Download available in ${seconds} seconds...`;
+			const timer = setInterval(() => {
+				seconds -= 1;
+				countdown.textContent = seconds ? `Download available in ${seconds} seconds...` : "Your download is ready.";
+				if (seconds === 0) {
+					clearInterval(timer);
+					downloadButton.removeAttribute("aria-disabled");
+					downloadButton.removeAttribute("tabindex");
+				}
+			}, 1000);
+		});
+	</script>
 </body>
 </html>
