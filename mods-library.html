@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="app-icon.ico" type="image/x-icon">
+	<link rel="manifest" href="site.webmanifest">
+	<title>GTA5 Mod Library</title>
+	<style>
+		:root { color-scheme: dark; --ink: #f6f2e9; --muted: #aaa99f; --line: rgba(255,255,255,.16); --panel: rgba(8,14,10,.62); --green: #b7ef73; --orange: #ff9c66; --red: #ff7969; }
+		* { box-sizing: border-box; }
+		body { margin: 0; min-height: 100vh; color: var(--ink); font-family: "Segoe UI", "Trebuchet MS", sans-serif; background: #183b1b linear-gradient(90deg, rgba(35,83,32,.28), rgba(25,58,24,.18) 48%, rgba(2,7,4,.42)), url("https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png") center / cover fixed; }
+		body::before { position: fixed; z-index: -1; inset: 0; background: repeating-linear-gradient(135deg, transparent 0 38px, rgba(255,255,255,.018) 39px 40px); content: ""; }
+		.shell { width: min(1180px, calc(100% - 40px)); margin: auto; padding: 26px 0 60px; }
+		header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+		.brand { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 700; }
+		.mark { width: 12px; height: 12px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px var(--green); }
+		nav { display: flex; gap: 10px; align-items: center; color: var(--muted); font-size: .78rem; font-weight: 800; letter-spacing: .08em; }
+		nav a { padding: 9px 11px; border: 1px solid transparent; border-radius: 4px; color: inherit; text-decoration: none; transition: color .2s, border-color .2s, background .2s; }
+		nav a:hover, nav a.active { border-color: var(--green); color: #10150d; background: var(--green); }
+		main { padding-top: 62px; }
+		.kicker { color: var(--green); font-size: .74rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+		h1 { max-width: 740px; margin: 16px 0 12px; font-size: clamp(3rem, 8vw, 6.4rem); line-height: .9; letter-spacing: -.06em; }
+		.lede { max-width: 610px; margin: 0 0 34px; color: #d7d7c7; font-size: 1.05rem; line-height: 1.6; }
+		.layout { display: grid; grid-template-columns: minmax(250px, .78fr) minmax(0, 1.55fr); gap: 26px; align-items: start; }
+		.panel, .mod-card { border: 1px solid var(--line); border-radius: 8px; background: var(--panel); box-shadow: 12px 12px 0 rgba(255,156,102,.07); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+		.panel { padding: 24px; }
+		.panel h2 { margin: 8px 0 20px; font-size: 1.6rem; }
+		label { display: block; margin: 16px 0 7px; color: var(--muted); font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+		input[type="text"], textarea { width: 100%; border: 1px solid var(--line); border-radius: 4px; padding: 12px; color: var(--ink); background: rgba(0,0,0,.28); font: inherit; }
+		textarea { min-height: 92px; resize: vertical; }
+		input:focus, textarea:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+		.file-drop { display: grid; min-height: 112px; place-items: center; margin-top: 16px; padding: 16px; border: 1px dashed rgba(183,239,115,.6); border-radius: 5px; color: var(--muted); text-align: center; background: rgba(183,239,115,.06); cursor: pointer; }
+		.file-drop:hover, .file-drop:focus-within { border-color: var(--green); background: rgba(183,239,115,.12); }
+		.file-drop input { width: 100%; margin-top: 10px; font-size: .78rem; }
+		.file-name { min-height: 18px; margin: 9px 0 0; color: var(--green); font-size: .78rem; overflow-wrap: anywhere; }
+		.button { display: inline-block; width: 100%; margin-top: 18px; padding: 13px 18px; border: 1px solid var(--green); border-radius: 4px; color: #10150d; background: var(--green); font: 700 .88rem "Trebuchet MS", sans-serif; cursor: pointer; transition: transform .2s, background .2s; }
+		.button:hover { transform: translateY(-2px); background: #d2ffa1; }
+		.status { min-height: 18px; margin: 12px 0 0; color: var(--orange); font-size: .78rem; }
+		.library-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+		.library-head h2 { margin: 0; font-size: 1.6rem; }
+		.count { color: var(--muted); font-size: .78rem; }
+		.mod-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+		.community { margin-top: 54px; }
+		.community-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+		.community .mod-card { box-shadow: none; }
+		.mod-card { overflow: hidden; }
+		.mod-image { display: block; width: 100%; height: 170px; object-fit: cover; background: #253626; }
+		.mod-content { padding: 18px; }
+		.mod-content h3 { margin: 0 0 8px; font-size: 1.25rem; }
+		.mod-content p { min-height: 50px; margin: 0 0 18px; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+		.mod-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+		.download { padding: 9px 13px; border: 1px solid var(--green); border-radius: 4px; color: var(--green); font-size: .78rem; font-weight: 700; text-decoration: none; }
+		.download:hover { color: #10150d; background: var(--green); }
+		.file-meta { max-width: 58%; color: var(--muted); font-size: .7rem; overflow-wrap: anywhere; }
+		.empty { grid-column: 1 / -1; padding: 44px 20px; border: 1px dashed var(--line); color: var(--muted); text-align: center; }
+		.delete { border: 0; padding: 0; color: var(--red); background: none; font-size: .72rem; cursor: pointer; }
+		@media (max-width: 820px) { .layout { grid-template-columns: 1fr; } .mod-grid, .community-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+		@media (max-width: 560px) { .shell { width: min(100% - 28px, 520px); } nav { display: none; } main { padding-top: 42px; } .mod-grid, .community-grid { grid-template-columns: 1fr; } h1 { overflow-wrap: anywhere; } }
+	</style>
+</head>
+<body>
+	<div class="shell">
+		<header>
+			<div class="brand"><span class="mark"></span> GTA5 Mod Starter</div>
+			<nav aria-label="Main navigation"><a href="Untitled-1.html">HOME</a><a class="active" href="mods-library.html">UPLOAD</a><a href="discover.html">DISCOVER</a><a href="profile.html">PROFILE</a></nav>
+		</header>
+		<main>
+			<div class="kicker">Your personal mod shelf</div>
+			<h1>Share the loadout.</h1>
+			<p class="lede">Add a mod with its cover image, title, description, and file. Everything stays in this browser, ready to download whenever you need it.</p>
+			<div class="layout">
+				<section class="panel" aria-labelledby="add-title">
+					<div class="kicker">New entry</div>
+					<h2 id="add-title">Add a mod</h2>
+					<form id="modForm">
+						<label for="modTitle">Title</label>
+						<input id="modTitle" name="title" type="text" maxlength="70" required placeholder="e.g. Rampage Trainer">
+						<label for="modDescription">Description</label>
+						<textarea id="modDescription" name="description" required placeholder="What does this mod add?"></textarea>
+						<label for="modImage">Mod image</label>
+						<input id="modImage" name="modImage" type="url" placeholder="https://example.com/mod-image.jpg">
+						<label for="modImageFile">Or upload an image</label>
+						<input id="modImageFile" name="modImageFile" type="file" accept="image/*">
+						<label class="file-drop" for="modFile">Choose a mod file<input id="modFile" name="modFile" type="file" required></label>
+						<p class="file-name" id="fileName">No file selected</p>
+						<button class="button" type="submit">Add to library</button>
+						<p class="status" id="status" aria-live="polite"></p>
+					</form>
+				</section>
+				<section aria-labelledby="library-title">
+					<div class="library-head"><h2 id="library-title">My mods</h2><span class="count" id="modCount"></span></div>
+					<div class="mod-grid" id="modGrid"></div>
+				</section>
+			</div>
+		</main>
+	</div>
+	<script>
+		const form = document.querySelector("#modForm");
+		const modGrid = document.querySelector("#modGrid");
+		const modCount = document.querySelector("#modCount");
+		const fileInput = document.querySelector("#modFile");
+		const imageInput = document.querySelector("#modImageFile");
+		const fileName = document.querySelector("#fileName");
+		const status = document.querySelector("#status");
+		const storageKey = "gta5-mod-library";
+		const defaultImage = "https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png";
+		let mods = JSON.parse(localStorage.getItem(storageKey) || "[]");
+		fileInput.addEventListener("change", () => { fileName.textContent = fileInput.files[0]?.name || "No file selected"; });
+		function saveMods() { localStorage.setItem(storageKey, JSON.stringify(mods)); }
+		function renderMods() {
+			modCount.textContent = `${mods.length} ${mods.length === 1 ? "mod" : "mods"}`;
+			modGrid.replaceChildren();
+			if (!mods.length) {
+				const empty = document.createElement("p");
+				empty.className = "empty";
+				empty.textContent = "Your library is empty. Add the first mod from the form.";
+				modGrid.append(empty);
+				return;
+			}
+			mods.forEach((mod, index) => {
+				const card = document.createElement("article");
+				card.className = "mod-card";
+				card.innerHTML = `<img class="mod-image" src="${mod.image || defaultImage}" alt="${mod.title} cover" loading="lazy"><div class="mod-content"><h3>${mod.title}</h3><p>${mod.description}</p><div class="mod-actions"><span class="file-meta">${mod.fileName}</span><a class="download" download="${mod.fileName}" href="${mod.fileData}">Download</a></div><button class="delete" type="button" data-index="${index}">Remove</button></div>`;
+				modGrid.append(card);
+			});
+		}
+		form.addEventListener("submit", async (event) => {
+			event.preventDefault();
+			const file = fileInput.files[0];
+			if (!file) {
+				status.textContent = "Choose a mod file first.";
+				return;
+			}
+			if (window.location.protocol === "file:") {
+				status.textContent = "Open this page at http://localhost:8000/mods-library.html after starting server.py.";
+				return;
+			}
+			const uploadData = new FormData(form);
+			try {
+				status.textContent = "Saving mod to Uploads...";
+				const session = JSON.parse(localStorage.getItem("gta5-session") || "null");
+				if (!session?.token) {
+					window.location.href = "signin.html";
+					return;
+				}
+				const response = await fetch("/api/upload", { method: "POST", headers: { Authorization: `Bearer ${session.token}` }, body: uploadData });
+				if (!response.ok) throw new Error("Upload failed");
+				window.location.href = "discover.html";
+			} catch (error) {
+				status.textContent = "Start server.py first, then open this page at http://localhost:8000.";
+			}
+		});
+		modGrid.addEventListener("click", (event) => {
+			if (!event.target.matches(".delete")) return;
+			mods.splice(Number(event.target.dataset.index), 1);
+			saveMods();
+			renderMods();
+		});
+		renderMods();
+	</script>
+</body>
+</html>

@@ -3,17 +3,21 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="app-icon.ico" type="image/x-icon">
+	<link rel="manifest" href="site.webmanifest">
 	<title>Download GTA5 Mods</title>
 	<style>
 		:root { color-scheme: dark; --ink: #f6f2e9; --muted: #aaa99f; --line: #30352f; --panel: rgba(8, 14, 10, .36); --green: #b7ef73; --orange: #ff9c66; }
 		* { box-sizing: border-box; }
-		body { margin: 0; min-height: 100vh; color: var(--ink); font-family: "Segoe UI", "Trebuchet MS", sans-serif; background-color: #183b1b; background-image: linear-gradient(90deg, rgba(35,83,32,.58) 0%, rgba(25,58,24,.45) 48%, rgba(2,7,4,.72) 100%), url("https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png"); background-position: center; background-size: cover; background-attachment: fixed; background-blend-mode: normal, normal; }
+		body { margin: 0; min-height: 100vh; color: var(--ink); font-family: "Segoe UI", "Trebuchet MS", sans-serif; background-color: #183b1b; background-image: linear-gradient(90deg, rgba(35,83,32,.28) 0%, rgba(25,58,24,.18) 48%, rgba(2,7,4,.42) 100%), url("https://www.bragitoff.com/wp-content/uploads/2015/11/GTAV_ATLUS_2048x2048.png"); background-position: center; background-size: cover; background-attachment: fixed; background-blend-mode: normal, normal; }
 		body::before { position: fixed; z-index: -1; inset: 0; background: linear-gradient(120deg, rgba(183,239,115,.08), transparent 38%), repeating-linear-gradient(135deg, transparent 0 38px, rgba(255,255,255,.018) 39px 40px); content: ""; }
 		.shell { width: min(1000px, calc(100% - 40px)); margin: auto; padding: 26px 0 52px; }
 		header { display: flex; align-items: center; justify-content: space-between; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
 		.brand { display: flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 700; }
 		.mark { width: 12px; height: 12px; border-radius: 50%; background: var(--green); box-shadow: 0 0 18px var(--green); }
-		header span:last-child { color: var(--muted); font-size: .8rem; letter-spacing: .12em; }
+		nav { display: flex; gap: 10px; align-items: center; font-size: .78rem; font-weight: 800; letter-spacing: .08em; }
+		nav a { padding: 9px 11px; border: 1px solid transparent; border-radius: 4px; color: var(--muted); text-decoration: none; }
+		nav a:hover, nav a.active { border-color: var(--green); color: #10150d; background: var(--green); }
 		main { display: grid; min-height: 72vh; place-items: center; padding: 70px 0; }
 		.download-card { width: min(620px, 100%); padding: clamp(28px, 6vw, 58px); border: 1px solid rgba(255,255,255,.18); border-radius: 10px; text-align: center; background: var(--panel); box-shadow: 16px 16px 0 rgba(255,156,102,.08); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 		.kicker { color: var(--green); font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
@@ -45,7 +49,7 @@
 	<div class="shell">
 		<header>
 			<div class="brand"><span class="mark"></span> GTA5 Mod Starter</div>
-			<span>DOWNLOAD CENTER</span>
+			<nav aria-label="Main navigation"><a href="Untitled-1.html">HOME</a><a href="mods-library.html">UPLOAD</a><a href="discover.html">DISCOVER</a><a class="active" href="mods-download.html">STARTER ZIP</a></nav>
 		</header>
 		<main>
 			<section class="download-card" aria-labelledby="page-title">
